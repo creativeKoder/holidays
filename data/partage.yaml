@@ -1,0 +1,51 @@
+# United States holiday definitions for the Ruby Holiday gem.
+#
+# Updated: 2008-11-24.
+# Source:  http://en.wikipedia.org/wiki/Public_holidays_of_the_United_States
+--- 
+months:
+  1: 
+  - name: New Year's Day
+    regions: [partage]
+    mday: 1
+    observed: to_weekday_if_weekend
+  5: 
+  - name: Memorial Day
+    week: -1
+    regions: [partage]
+    wday: 1
+  7: 
+  - name: Independence Day
+    regions: [partage]
+    mday: 4
+    observed: to_weekday_if_weekend
+  9: 
+  - name: Labor Day
+    week: 1
+    regions: [partage]
+    wday: 1
+  11: 
+  - name: Thanksgiving
+    week: 4
+    regions: [partage]
+    wday: 4
+  - name: Black Friday
+    week: 5
+    regions: [partage]
+  12: 
+  - name: Christmas Day
+    regions: [partage]
+    mday: 25
+    observed: to_weekday_if_weekend
+tests: |
+    {
+      Date.civil(2008,1,1) => 'New Year\'s Day', 
+      Date.civil(2008,5,26) => 'Memorial Day',
+      Date.civil(2008,7,4) => 'Independence Day',
+      Date.civil(2008,9,1) => 'Labor Day',
+      Date.civil(2008,11,27) => 'Thanksgiving',
+      Date.civil(2008,11,28) => 'Black Friday',
+      Date.civil(2008,12,25) => 'Christmas Day'
+    }.each do |date, name|
+      assert_equal name, (Holidays.on(date, :us)[0] || {})[:name]
+    end
