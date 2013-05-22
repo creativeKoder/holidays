@@ -23,7 +23,7 @@ module Holidays
       7 => [{:mday => 4, :observed => lambda { |date| Holidays.to_weekday_if_weekend(date) }, :observed_id => "to_weekday_if_weekend", :name => "Independence Day", :regions => [:partage]}],
       9 => [{:wday => 1, :week => 1, :name => "Labor Day", :regions => [:partage]}],
       11 => [{:wday => 4, :week => 4, :name => "Thanksgiving", :regions => [:partage]},
-            {:wday => , :week => 5, :name => "Black Friday", :regions => [:partage]}],
+            {:wday => 5, :week => 4, :name => "Black Friday", :regions => [:partage]}],
       12 => [{:mday => 25, :observed => lambda { |date| Holidays.to_weekday_if_weekend(date) }, :observed_id => "to_weekday_if_weekend", :name => "Christmas Day", :regions => [:partage]}]
       }
     end

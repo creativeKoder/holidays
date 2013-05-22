@@ -30,7 +30,8 @@ months:
     regions: [partage]
     wday: 4
   - name: Black Friday
-    week: 5
+    week: 4
+    wday: 5
     regions: [partage]
   12: 
   - name: Christmas Day
