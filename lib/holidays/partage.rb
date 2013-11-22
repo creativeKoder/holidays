@@ -22,12 +22,19 @@ module Holidays
       5 => [{:wday => 1, :week => -1, :name => "Memorial Day", :regions => [:partage]}],
       7 => [{:mday => 4, :observed => lambda { |date| Holidays.to_weekday_if_weekend(date) }, :observed_id => "to_weekday_if_weekend", :name => "Independence Day", :regions => [:partage]}],
       9 => [{:wday => 1, :week => 1, :name => "Labor Day", :regions => [:partage]}],
-      11 => [{:wday => 4, :week => 4, :name => "Thanksgiving", :regions => [:partage]},
-            {:wday => 5, :week => 4, :name => "Black Friday", :regions => [:partage]}],
+      11 => [{:function => lambda { |year| Holidays.day_after_thanksgiving(year) }, :function_id => "day_after_thanksgiving(year)", :name => "Black Friday", :regions => [:partage]},
+            {:wday => 4, :week => 4, :name => "Thanksgiving", :regions => [:partage]}],
       12 => [{:mday => 25, :observed => lambda { |date| Holidays.to_weekday_if_weekend(date) }, :observed_id => "to_weekday_if_weekend", :name => "Christmas Day", :regions => [:partage]}]
       }
     end
   end
+
+def self.day_after_thanksgiving(year)
+  Holidays.between(Date.civil(year, 1, 1), Date.civil(year, 12, 31), :us).find do |holiday|
+    holiday[:name] == "Thanksgiving"
+  end[:date] + 1
+end
+
 
 
 end
