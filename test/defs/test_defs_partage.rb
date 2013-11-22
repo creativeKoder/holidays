@@ -7,16 +7,17 @@ require File.expand_path(File.dirname(__FILE__)) + '/../test_helper'
 class PartageDefinitionTests < Test::Unit::TestCase  # :nodoc:
 
   def test_partage
+puts Holidays.between(Date.civil(2013,11,1), Date.civil(2013,11,30), :partage).inspect
 {
   Date.civil(2008,1,1) => 'New Year\'s Day', 
   Date.civil(2008,5,26) => 'Memorial Day',
   Date.civil(2008,7,4) => 'Independence Day',
   Date.civil(2008,9,1) => 'Labor Day',
-  Date.civil(2008,11,27) => 'Thanksgiving',
-  Date.civil(2008,11,28) => 'Black Friday',
+  Date.civil(2013,11,28) => 'Thanksgiving',
+  Date.civil(2013,11,29) => 'Black Friday',
   Date.civil(2008,12,25) => 'Christmas Day'
 }.each do |date, name|
-  assert_equal name, (Holidays.on(date, :us)[0] || {})[:name]
+  assert_equal name, (Holidays.on(date, :partage)[0] || {})[:name]
 end
 
   end

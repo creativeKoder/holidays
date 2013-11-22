@@ -25,28 +25,35 @@ months:
     regions: [partage]
     wday: 1
   11: 
+  - name: Black Friday
+    regions: [partage]
+    function: day_after_thanksgiving(year)
   - name: Thanksgiving
     week: 4
     regions: [partage]
     wday: 4
-  - name: Black Friday
-    week: 4
-    wday: 5
-    regions: [partage]
   12: 
   - name: Christmas Day
     regions: [partage]
     mday: 25
     observed: to_weekday_if_weekend
+methods:
+  day_after_thanksgiving: |
+    def self.day_after_thanksgiving(year)
+      Holidays.between(Date.civil(year, 1, 1), Date.civil(year, 12, 31), :us).find do |holiday|
+        holiday[:name] == "Thanksgiving"
+      end[:date] + 1
+    end
 tests: |
+    puts Holidays.between(Date.civil(2013,11,1), Date.civil(2013,11,30), :partage).inspect
     {
       Date.civil(2008,1,1) => 'New Year\'s Day', 
       Date.civil(2008,5,26) => 'Memorial Day',
       Date.civil(2008,7,4) => 'Independence Day',
       Date.civil(2008,9,1) => 'Labor Day',
-      Date.civil(2008,11,27) => 'Thanksgiving',
-      Date.civil(2008,11,28) => 'Black Friday',
+      Date.civil(2013,11,28) => 'Thanksgiving',
+      Date.civil(2013,11,29) => 'Black Friday',
       Date.civil(2008,12,25) => 'Christmas Day'
     }.each do |date, name|
-      assert_equal name, (Holidays.on(date, :us)[0] || {})[:name]
+      assert_equal name, (Holidays.on(date, :partage)[0] || {})[:name]
     end
